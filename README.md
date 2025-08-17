@@ -28,6 +28,37 @@ A modern FastAPI-powered website for Memphis Consultancy, featuring responsive d
    pip install fastapi uvicorn jinja2
    ```
 
+## Python Virtual Environment Setup
+
+To prepare and use a Python virtual environment with all required modules:
+
+1. **Create the virtual environment**
+   ```bash
+   python3 -m venv venv
+   ```
+
+2. **Activate the virtual environment**
+   ```bash
+   source venv/bin/activate
+   ```
+
+3. **Install all required modules**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   This will install FastAPI, Uvicorn, Jinja2, pytest, and httpx for testing.
+
+4. **Run the website**
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+5. **Run unit tests**
+   ```bash
+   pytest
+   ```
+   Test results will be shown in the terminal. You can find and edit tests in `test_main.py`.
+
 ## Running the Website
 
 1. **Start the FastAPI server**
