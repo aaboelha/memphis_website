@@ -70,5 +70,16 @@ templates/             # Jinja2 HTML templates
 run_website.sh         # Shell script to start the server
 ```
 
+## Testing
+
+Unit tests are provided using `pytest` and FastAPI's `TestClient`.
+
+### Run all tests:
+```bash
+pytest
+```
+
+Test file: `test_main.py`
+
 ## License
 MIT
