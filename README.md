@@ -41,6 +41,27 @@ A modern FastAPI-powered website for Memphis Consultancy, featuring responsive d
    ./run_website.sh
    ```
 
+## Docker Setup
+
+You can easily deploy this website using Docker:
+
+1. **Build the Docker image**
+   ```bash
+   docker build -t memphis_website .
+   ```
+
+2. **Run the Docker container**
+   ```bash
+   docker run -d -p 8000:8000 memphis_website
+   ```
+
+The website will be available at [http://localhost:8000](http://localhost:8000) on your server.
+
+**Files for Docker deployment:**
+- `Dockerfile`: Defines the build steps for the container
+- `requirements.txt`: Python dependencies
+- `.dockerignore`: Keeps the image clean
+
 ## Project Structure
 ```
 main.py                # FastAPI app entry point
