@@ -93,6 +93,33 @@ The website will be available at [http://localhost:8000](http://localhost:8000) 
 - `requirements.txt`: Python dependencies
 - `.dockerignore`: Keeps the image clean
 
+## Ollama & Mistral Setup
+
+To enable the "Ask Questions" feature with Mistral:
+
+1. **Install Ollama**
+   Follow instructions at https://ollama.com/download
+
+2. **Pull the Mistral model**
+   ```bash
+   ollama pull mistral
+   ```
+
+3. **Start Ollama and make it accessible to other machines/containers**
+   ```bash
+   OLLAMA_HOST=0.0.0.0:11434 ollama serve
+   ```
+   This will bind Ollama to all network interfaces so Docker and other machines can connect.
+
+4. **Test Mistral API**
+   ```bash
+   curl -X POST http://localhost:11434/api/generate -d '{"model": "mistral", "prompt": "Hello"}' -H "Content-Type: application/json"
+   ```
+   You should see a streaming JSON response from Mistral.
+
+5. **Configure your FastAPI app**
+   Make sure your app uses the correct host IP for `ollama_url` (e.g., `http://localhost:11434/api/generate` or your host IP if running in Docker).
+
 ## Project Structure
 ```
 main.py                # FastAPI app entry point
