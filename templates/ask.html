@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ask Mistral | Memphis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white font-sans">
+  <!-- Navbar -->
+  <header class="flex flex-col sm:flex-row justify-between items-center px-6 py-6 border-b border-gray-700">
+    <h1 class="text-2xl font-bold tracking-wide text-cyan-400 mb-4 sm:mb-0">Memphis</h1>
+    <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center">
+      <a href="/" class="hover:text-cyan-300 transition">Home</a>
+      <a href="/portfolio" class="hover:text-cyan-300 transition">Portfolio</a>
+      <a href="/about" class="hover:text-cyan-300 transition">About</a>
+      <a href="/contact" class="hover:text-cyan-300 transition">Contact</a>
+      <a href="/ask" class="text-cyan-300 font-semibold">Ask Questions</a>
+    </nav>
+  </header>
+
+  <!-- Ask Mistral Section -->
+  <section class="flex flex-col items-center justify-center py-24 px-6">
+    <h2 class="text-4xl font-bold mb-6 text-blue-600">Ask Mistral</h2>
+    <form id="ask-form" class="w-full max-w-xl mx-auto flex flex-col gap-4">
+      <textarea id="question" rows="4" class="w-full px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Type your question..."></textarea>
+      <button type="submit" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-semibold transition">Ask</button>
+    </form>
+    <div id="response" class="mt-8 text-lg text-gray-200"></div>
+  </section>
+
+  <script>
+    document.getElementById('ask-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const question = document.getElementById('question').value;
+      const responseDiv = document.getElementById('response');
+      responseDiv.textContent = 'Waiting for response...';
+      try {
+        const res = await fetch('/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+        const data = await res.json();
+        responseDiv.textContent = data.response || data.error || JSON.stringify(data);
+      } catch (err) {
+        responseDiv.textContent = 'Error: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>
