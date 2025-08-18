@@ -26,7 +26,7 @@
       <textarea id="question" rows="4" class="w-full px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Type your question..."></textarea>
       <button type="submit" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white rounded-full font-semibold transition">Ask</button>
     </form>
-    <div id="response" class="mt-8 text-lg text-gray-200"></div>
+    <div id="response" class="mt-8 text-lg text-gray-200 whitespace-pre-line"></div>
   </section>
 
   <script>
@@ -42,7 +42,13 @@
           body: JSON.stringify({ question })
         });
         const data = await res.json();
-        responseDiv.textContent = data.response || data.error || JSON.stringify(data);
+        responseDiv.textContent = '';
+        // Convert markdown code blocks to HTML
+        let resp = data.response || data.error || JSON.stringify(data);
+        resp = resp.replace(/```(\w+)?\n([\s\S]*?)```/g, function(match, lang, code) {
+          return `<pre class='bg-gray-900 rounded p-4 overflow-x-auto mb-4'><code>${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+        });
+        responseDiv.innerHTML = resp.replace(/\n/g, '<br>');
       } catch (err) {
         responseDiv.textContent = 'Error: ' + err;
       }
